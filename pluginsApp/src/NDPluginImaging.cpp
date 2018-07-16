@@ -102,8 +102,8 @@ void NDPluginImaging::processCallbacks(NDArray *pArray)
     static const char* functionName = "processCallbacks";
 
     /* Call the base class method */
-    NDPluginDriver::processCallbacks(pArray);
-
+    NDPluginDriver::beginProcessCallbacks(pArray);
+    
     pArray->getInfo(&arrayInfo);
 
     if (pArray->ndims > 0) sizeX = pArray->dims[0].size;
