@@ -1,0 +1,115 @@
+#=================================================================#
+# Template file: NDFitsN.template
+# % macro, P, Device Prefix
+# % macro, R, Device Suffix
+# % macro, PORT, Asyn Port name
+# The asyn port name should match what you have
+# written in your startup script
+# % macro, ADDR, Asyn Port address
+# % macro, TIMEOUT, Timeout
+
+record(ai, "$(P)$(R)PeakAmplitude_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_AMPLITUDE")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(AMPLITUDE_RBV_FLNK=)")
+}
+
+record(ao, "$(P)$(R)PeakAmplitude")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_AMPLITUDE")
+   field(PREC, "4")
+   field(VAL,  "1.0")
+   field(PINI, "YES")
+   field(FLNK, "$(AMPLITUDE_FLNK=)")
+}
+
+record(ai, "$(P)$(R)PeakAmplitudeActual")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_AMPLITUDE_ACTUAL")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(AMPLITUDE_ACTUAL_FLNK=)")
+}
+
+record(ao, "$(P)$(R)PeakAmplitudeSync")
+{
+   field(OMSL, "closed_loop")
+   field(DOL,  "$(P)$(R)PeakAmplitudeActual NPP")
+   field(OUT,  "$(P)$(R)PeakAmplitude PP")
+}
+
+record(ai, "$(P)$(R)PeakMu_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_MU")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(MU_RBV_FLNK=)")
+}
+
+record(ao, "$(P)$(R)PeakMu")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_MU")
+   field(PREC, "4")
+   field(VAL,  "1.0")
+   field(PINI, "YES")
+   field(FLNK, "$(MU_FLNK=)")
+}
+
+record(ai, "$(P)$(R)PeakMuActual")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_MU_ACTUAL")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(MU_ACTUAL_FLNK=)")
+}
+
+record(ao, "$(P)$(R)PeakMuSync")
+{
+   field(OMSL, "closed_loop")
+   field(DOL,  "$(P)$(R)PeakMuActual NPP")
+   field(OUT,  "$(P)$(R)PeakMu PP")
+}
+
+record(ai, "$(P)$(R)PeakSigma_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_SIGMA")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(SIGMA_RBV_FLNK=)")
+}
+
+record(ao, "$(P)$(R)PeakSigma")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_SIGMA")
+   field(PREC, "4")
+   field(VAL,  "1.0")
+   field(PINI, "YES")
+   field(FLNK, "$(SIGMA_FLNK=)")
+}
+
+record(ai, "$(P)$(R)PeakSigmaActual")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAK_SIGMA_ACTUAL")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(SIGMA_ACTUAL_FLNK=)")
+}
+
+record(ao, "$(P)$(R)PeakSigmaSync")
+{
+   field(OMSL, "closed_loop")
+   field(DOL,  "$(P)$(R)PeakSigmaActual NPP")
+   field(OUT,  "$(P)$(R)PeakSigma PP")
+}
+

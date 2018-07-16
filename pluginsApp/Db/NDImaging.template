@@ -1,0 +1,45 @@
+#=================================================================#
+# Template file: NDImaging.template
+
+include "NDPluginBase.template"
+
+#
+# Add records for Imaging plugin here
+#
+
+record(waveform, "$(P)$(R)Dummy1_RBV")
+{
+   field(DTYP, "asynFloat64ArrayIn")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NDIMAGING_DUMMY_1")
+   field(FTVL, "DOUBLE")
+   field(NELM, "$(NELM)")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)Dummy2")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NDIMAGING_DUMMY_2")
+   field(PREC, "4")
+}
+
+record(ai, "$(P)$(R)Dummy2_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))NDIMAGING_DUMMY_2")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+}
+
+###################################################################
+# These records are already defined in different places in        #
+# standard areaDetector templates. Here they are extended by      #
+# setting the attributes needed for the connections between them. #
+###################################################################
+
+# NDBase plugin modifications
+
+record(bo, "$(P)$(R)EnableCallbacks")
+{
+    field(VAL,  "1")
+}

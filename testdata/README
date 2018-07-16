@@ -1,0 +1,5 @@
+800W5-95kv.txt: Added a spectrum measured at Saclay on the source SIHLI.
+                The file is 800W5-95kV.txt. It is a 2 column ascii file;
+                first column is wavelength, second is intensity.
+                The spectrum shows Balmer alpha ray at 656.2nm, and 4 other
+                rays.

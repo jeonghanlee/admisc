@@ -1,0 +1,298 @@
+#=================================================================#
+# Template file: NDFits.template
+
+include "NDPluginBase.template"
+
+###################################################################
+#  These records deal with fitting                                #
+###################################################################
+
+
+record(waveform, "$(P)$(R)X_RBV")
+{
+   field(DTYP, "asynFloat64ArrayIn")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_X")
+   field(FTVL, "DOUBLE")
+   field(NELM, "$(XSIZE)")
+   field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P)$(R)Y_RBV")
+{
+   field(DTYP, "asynFloat64ArrayIn")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_Y")
+   field(FTVL, "DOUBLE")
+   field(NELM, "$(XSIZE)")
+   field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P)$(R)Fit_RBV")
+{
+   field(DTYP, "asynFloat64ArrayIn")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_FIT")
+   field(FTVL, "DOUBLE")
+   field(NELM, "$(XSIZE)")
+   field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P)$(R)Background_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_BACKGROUND")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(BACKGROUND_RBV_FLNK=)")
+}
+
+record(ao, "$(P)$(R)Background")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_BACKGROUND")
+   field(PREC, "4")
+   field(VAL,  "0.0")
+   field(FLNK, "$(BACKGROUND_FLNK=)")
+}
+
+record(ai, "$(P)$(R)BackgroundActual")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_BACKGROUND_ACTUAL")
+   field(PREC, "4")
+   field(SCAN, "I/O Intr")
+   field(FLNK, "$(BACKGROUND_ACTUAL_FLNK=)")
+}
+
+record(ao, "$(P)$(R)BackgroundSync")
+{
+   field(OMSL, "closed_loop")
+   field(DOL,  "$(P)$(R)BackgroundActual NPP")
+   field(OUT,  "$(P)$(R)Background PP")
+}
+
+record(mbbi, "$(P)$(R)Status_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_STATUS")
+   field(SCAN, "I/O Intr")
+   field(ZRST, "No fit executed")
+   field(ZRVL, "0")
+   field(ONST, "Fit successful")
+   field(ONVL, "1")
+   field(TWST, "Fit failed")
+   field(TWVL, "2")
+   field(THST, "Wrong array dimenions")
+   field(THVL, "3")
+}
+
+record(longin, "$(P)$(R)Points_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_POINTS")
+   field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)$(R)Peaks_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PEAKS")
+   field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)$(R)GoodCounter_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_GOOD_COUNTER")
+   field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)$(R)BadCounter_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_BAD_COUNTER")
+   field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P)$(R)ResetCounters")
+{
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_RESET_COUNTERS")
+   field(ZNAM,  "Reset")
+   field(ONAM,  "Reset")
+}
+
+# See lmstruct.h lm_control_struct for the explanation if the following PVs
+record(ai, "$(P)$(R)Ftol_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_FTOL")
+   field(PREC, "6")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)Ftol")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_FTOL")
+   field(PREC, "6")
+   # This is from float.h, DBL_EPSILON
+   field(VAL,  "1E-9")
+   field(PINI, "YES")
+}
+
+record(ai, "$(P)$(R)Xtol_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_XTOL")
+   field(PREC, "6")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)Xtol")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_XTOL")
+   field(PREC, "6")
+   # This is from float.h, DBL_EPSILON
+   field(VAL,  "1E-9")
+   field(PINI, "YES")
+}
+
+record(ai, "$(P)$(R)Gtol_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_GTOL")
+   field(PREC, "6")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)Gtol")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_GTOL")
+   field(PREC, "6")
+   # This is from float.h, DBL_EPSILON
+   field(VAL,  "1E-9")
+   field(PINI, "YES")
+}
+
+record(ai, "$(P)$(R)Epsilon_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_EPSILON")
+   field(PREC, "6")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)Epsilon")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_EPSILON")
+   field(PREC, "6")
+   # This is from float.h, DBL_EPSILON
+   field(VAL,  "1E-9")
+   field(PINI, "YES")
+}
+
+record(ai, "$(P)$(R)StepBound_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_STEPBOUND")
+   field(PREC, "2")
+   field(SCAN, "I/O Intr")
+}
+
+record(ao, "$(P)$(R)StepBound")
+{
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_STEPBOUND")
+   field(PREC, "2")
+   field(VAL,  "100.0")
+   field(PINI, "YES")
+}
+
+record(longin, "$(P)$(R)Patience_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PATIENCE")
+   field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(P)$(R)Patience")
+{
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_PATIENCE")
+   field(VAL,  "100")
+   field(PINI, "YES")
+}
+
+record(bi, "$(P)$(R)ScaleDiag_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_SCALE_DIAG")
+   field(ZNAM, "No rescale")
+   field(ONAM, "Rescale")
+   field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(P)$(R)ScaleDiag")
+{
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_SCALE_DIAG")
+   field(ZNAM, "No rescale")
+   field(ONAM, "Rescale")
+   field(VAL,  "1")
+   field(PINI, "YES")
+}
+
+# See lmstruct.h lm_status_struct for the explanation if the following PVs
+record(longin, "$(P)$(R)NrIterations_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_NR_ITERATIONS")
+   field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(P)$(R)ResidVectorNorm_RBV")
+{
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_RESID_VECTOR_NORM")
+   field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)$(R)Outcome_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_OUTCOME")
+   field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P)$(R)OutcomeStr_RBV")
+{
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_OUTCOME_STR")
+    field(FTVL, "CHAR")
+    field(NELM, "100")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P)$(R)OutcomeStrLong_RBV")
+{
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))FITS_OUTCOME_STR_LONG")
+    field(FTVL, "CHAR")
+    field(NELM, "100")
+    field(SCAN, "I/O Intr")
+}
+
+###################################################################
+# These records are already defined in different places in        #
+# standard areaDetector templates. Here they are extended by      #
+# setting the attributes needed for the connections between them. #
+###################################################################
+
+# NDBase plugin modifications
+
+record(bo, "$(P)$(R)EnableCallbacks")
+{
+    field(VAL,  "1")
+}

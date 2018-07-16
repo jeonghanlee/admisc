@@ -1,0 +1,12 @@
+$(P)$(R)Background
+$(P)$(R)Ftol
+$(P)$(R)Xtol
+$(P)$(R)Gtol
+$(P)$(R)Epsilon
+$(P)$(R)StepBound
+$(P)$(R)Patience
+$(P)$(R)ScaleDiag
+file "NDFitsN_settings.req", P=$(P), R=$(R)1:
+file "NDFitsN_settings.req", P=$(P), R=$(R)2:
+file "NDFitsN_settings.req", P=$(P), R=$(R)3:
+file "NDPluginBase_settings.req", P=$(P), R=$(R)

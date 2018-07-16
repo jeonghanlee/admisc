@@ -1,0 +1,63 @@
+#=================================================================#
+# Template file: NDSource.template
+
+include "NDPluginBase.template"
+
+record(calcout, "$(P)$(R)Proxy")
+{
+	field(CALC, "A")
+	field(INPA, "$(SOURCE) CPP NMS")
+	field(OUT,  "$(P)$(R)ExtValue PP NMS")
+	field(PREC, "9")
+}
+
+record(ao, "$(P)$(R)ExtValue")
+{
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))EXT_VALUE")
+}
+
+record(stringout, "$(P)$(R)Source")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynOctetWrite")
+    field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SOURCE")
+    field(VAL,  "$(SOURCE)")
+}
+
+record(stringin, "$(P)$(R)Source_RBV")
+{
+    field(DTYP, "asynOctetRead")
+    field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))SOURCE")
+    field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(P)$(R)Index")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))INDEX")
+   field(VAL,  "0")
+}
+
+record(longin, "$(P)$(R)Index_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))INDEX")
+   field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(P)$(R)Length")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))LENGTH")
+   field(VAL,  "$(NELEMENTS)")
+}
+
+record(longin, "$(P)$(R)Length_RBV")
+{
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT),$(ADDR),$(TIMEOUT))LENGTH")
+   field(SCAN, "I/O Intr")
+}
